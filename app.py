@@ -20,7 +20,7 @@ def index():
         
         file = Danil.file(file).save(os.path.join(uploads_dir, secure_filename(file.name+'.pdf')))
         cols = pdf2npcols('instance/uploads/pdf_file.pdf')  # нампи массив с нормализованными картинками
-        matrix = [col2nums(col) for col in cols]
+        matrix = [col2nums(col) if i != 1 else col2lets(col) for i, col in enumerate(cols)]
         tensor = [matrix] # тензор - несколько матриц для разных пдф файлов
         dfs = tensor2dfs(tensor)
 
