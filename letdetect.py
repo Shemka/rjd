@@ -4,12 +4,12 @@ import numpy as np
 
 letter = [];
 letter=[
-    Image.open(r"/letter/P.png"),
-    Image.open(r"/letter/PRL.png"),
-    Image.open(r"/letter/PRP.png"),
-    Image.open(r"/letter/R.png"),
-    Image.open(r"/letter/U.png"),
-    Image.open(r"/letter/USH.png")
+    Image.open(r"letter/P.png"),
+    Image.open(r"letter/PRL.png"),
+    Image.open(r"letter/PRP.png"),
+    Image.open(r"letter/R.png"),
+    Image.open(r"letter/U.png"),
+    Image.open(r"letter/USH.png")
 ]
 dictionary = {
     0:'П',
@@ -31,10 +31,13 @@ def find_element(left_shift=-11,right_shift=0, pal=None, i=0, w=0, h=0):
         for j in range(6):
             letters = np.array(letter[j].convert('L')) * 1
             letters = (letters == 0) * 1
-            pred = (pal[i + w_m:i + 18 + w_m, 0:w+1] == letters).sum() / (18 * w)
-                if (pred >= max):
-                    max = pred
-                    max_ans = j
+            try:
+                pred = (pal[i + w_m:i + 18 + w_m, 0:w+1] == letters).sum() / (18 * w)
+            except:
+                return(4)
+            if (pred >= max):
+                max = pred
+                max_ans = j
         if (max > all_max_ans):
             all_max_ans = max
             all_max_index = max_ans
