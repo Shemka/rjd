@@ -2,9 +2,10 @@ import os
 from flask import Flask, render_template, request, send_file
 from werkzeug.utils import secure_filename
 from pdf2npcols import pdf2npcols
-from numdetect import col2nums, col2lets
+from numdetect import col2nums
+from ledetect import col2lets
 from tensor2dfs import tensor2dfs
-
+import zipfile
 
 app = Flask(__name__)
 uploads_dir = os.path.join(app.instance_path, 'uploads')
@@ -14,8 +15,9 @@ def index():
     args = {"method": "GET"}
     if request.method == "POST":
         # тебе надо  для нескольких pdfов и для нескольких файлов собрать матрицы (колонки)
-        file = request.files["pdf_file"]
+        file = request.files[archive]
         args["method"] = "POST"
+        
         file = Danil.file(file).save(os.path.join(uploads_dir, secure_filename(file.name+'.pdf')))
         cols = pdf2npcols('instance/uploads/pdf_file.pdf')  # нампи массив с нормализованными картинками
         matrix = [col2nums(col) for col in cols]
