@@ -6,6 +6,7 @@ from numdetect import col2nums
 from letdetect import col2lets
 from tensor2dfs import tensor2dfs
 from exstruct_zip import zip2pdf
+from analysis import *
 
 app = Flask(__name__)
 uploads_dir = os.path.join(app.instance_path, 'uploads')
@@ -35,6 +36,8 @@ def index():
         print(spisock)
         dfss = tensor2dfs(a)
         dfs = [df.transpose() for df in dfss]
+        dfs = [df2batch2df(process_df(df)) for df in dfs]
+        print(problems_to_excel(dfs))
         #  dfs  мы передаем Саше 
 
         #return send_file('instance/uploads/pdf_file.pdf', as_attachment=True)
